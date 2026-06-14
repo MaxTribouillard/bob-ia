@@ -1,27 +1,43 @@
 import * as React from "react"
 import { useState } from "react"
+import { Input } from "./input"
 
-function chatInput({className}){
-    
-    const [userText, setUserText] = useState("")
+const ChatInput = ({ sendMessage }) => {
+  const [userText, setUserText] = useState("")
 
-    const handleSumbit = (e) => {
-        e.preventDefault()
-        console.log("Message du user : ", userText)
+  const handleMessage = async (e) => {
+
+    e.preventDefault()
+
+    console.log("Message du user : ", userText)
+
+    const springApiURL = "http://localhost:8080/api/message"
+    const model = "PHI-3.8"
+
+    try{
+        const res = await fetch(springApiURL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({"message": userText})
+        })
     }
+    catch(e){
+        console.log(e);
+    }
+    sendMessage(userText);
 
-    return(
-        <>
-        <div className="flex flex-row w-full">
-            <form onSubmit={handleSumbit}>
+    setUserText("")
+  }
 
-                <input className="w-full" type="text" onChange={(e) => setUserText(e.target.value)} />
-                <input className="bg-amber-100 hover:bg-amber-300" type="submit" value="Envoyer"/>
+  return (
+    <form onSubmit={handleMessage} className="flex w-full items-center gap-2">
+        <Input placeholder="Demander à Bob" value={userText} onChange={(e) => setUserText(e.target.value)}></Input>
+        <input className="cursor-pointer p-2" type="submit" value="Envoyer"/>
+    </form>
 
-            </form>
-        </div>
-        </>
-    )
+  )
 }
 
-export default chatInput
+export default ChatInput
