@@ -8,15 +8,17 @@ import './App.css'
 
 const sendMessage = async (userText) => {
   const springApiURL = "http://localhost:8080/api/message"
-  const model = "PHI-3.8"
+  const model = "phi-3-mini-4k-instruct"
   try{
       const res = await fetch(springApiURL, {
           method: "POST",
           headers: {
               "Content-Type": "application/json"
           },
-          body: JSON.stringify({"message": userText})
+          body: JSON.stringify({"message": userText, "model": model})
       })
+      console.log(JSON.stringify({"message": userText, "model": model}));
+      
       const data = await res.json();
       console.log("reponse du back : ", data);
       
