@@ -1,41 +1,47 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import {Card} from './components/ui/Card'
+import { Card } from './components/ui/card'
 import ChatInput from './components/ui/chatInput'
+import ChatMessage from "./components/ui/chatMessage"
 import './App.css'
 
-const sendMessage = async (userText) => {
-  const springApiURL = "http://localhost:8080/api/message"
-  const model = "phi-3-mini-4k-instruct"
-  try{
-      const res = await fetch(springApiURL, {
-          method: "POST",
-          headers: {
-              "Content-Type": "application/json"
-          },
-          body: JSON.stringify({"message": userText, "model": model})
-      })
-      console.log(JSON.stringify({"message": userText, "model": model}));
-      
-      const data = await res.json();
-      console.log("reponse du back : ", data);
-      
-  }
-  catch(e){
-      console.log(e);
-  }
-}
-
 function App() {
+  const [messages, setMessage] = useState([
+    { text: "Salut, moi c'est Bob. Comment puis-je t'aider ?", isUser: false }
+  ])
+
+  const sendMessage = async (userText) => {
+    const springApiURL = "http://localhost:8080/api/message"
+    const model = "phi-3-mini-4k-instruct"
+
+    setMessage((prev) => [...prev, { text: userText, isUser: true }])
+
+    try {
+      const res = await fetch(springApiURL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ "message": userText, "model": model })
+      })
+      console.log(JSON.stringify({ "message": userText, "model": model }))
+
+      const data = await res.json()
+      setMessage((prev) => [...prev, { text: data.response, isUser: false }])
+    } catch (e) {
+      console.log(e)
+    }
+  }
 
   return (
-    <>
-      <Card className="bottom-100">
-        <ChatInput sendMessage={sendMessage}></ChatInput>
+    <div className="app-container">
+      <Card>
+        <ChatMessage 
+          messages={messages}
+          botAvatarUrl={"/bob.png"}
+        />
+        <ChatInput sendMessage={sendMessage} />
       </Card>
-    </>
+    </div>
   )
 }
 
