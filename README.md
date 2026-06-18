@@ -1,17 +1,23 @@
-# React + Vite
+# Bob IA
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+![Logo de BobIA](https://cdn.miiwiki.org/8/85/Default_Male_Mii.png)
 
-## React Compiler
+Bob IA est un assistant virtuel personnel conçu pour être rapide, confidentiel et entièrement auto-hébergé. L'objectif de ce projet est d'apprendre à créer une interface de discussion fluide et moderne connectée à un grand modèle de langage (LLM) s'exécutant sur mon propre serveur, sans dépendre d'API payantes.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## L'Architecture du Projet
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-# bob-ia
+Le projet repose sur une **architecture découplée** pour séparer distinctement l'interface utilisateur de l'infrastructure IA.
+
+```text
+[ Client : React / Tailwind ] 
+             │ (Requêtes HTTP)
+             ▼
+[ Serveur API : Spring Boot ]
+             │ (Passerelle)
+             ▼
+[ Mon VPS : Ollama API ] ──► [ Modèle : Phi-3-Mini ]
+```
