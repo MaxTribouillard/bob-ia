@@ -2,7 +2,8 @@
 
 
 
-![Logo de BobIA](https://cdn.miiwiki.org/8/85/Default_Male_Mii.png)
+<!--![Logo de BobIA](https://cdn.miiwiki.org/8/85/Default_Male_Mii.png)-->
+<img src="https://via.placeholder.com/800x400?text=Emplacement+Photo+Bob+IA" width="250" alt="Logo de BobIA">
 
 Bob IA est un assistant virtuel personnel conçu pour être rapide, confidentiel et entièrement auto-hébergé. L'objectif de ce projet est d'apprendre à créer une interface de discussion fluide et moderne connectée à un grand modèle de langage (LLM) s'exécutant sur mon propre serveur, sans dépendre d'API payantes.
 
